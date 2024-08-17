@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Tracker</title>
+    <link rel="stylesheet" href="styles3.css">
+    <style>
+        
+        body {
+            background-color: #F4F4F9;
+            font-family: Arial, sans-serif;
+            color: #333;
+            text-align: center;
+        }
+
+        .tracker-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tracker-header {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .tracker-form {
+            margin-top: 20px;
+        }
+
+        .tracker-form label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #6C63FF;
+        }
+
+        .tracker-form input, .tracker-form textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 2px solid #6C63FF;
+            border-radius: 4px;
+            background-color: #F4F4F9;
+            margin-bottom: 10px;
+        }
+
+        .tracker-form button {
+            padding: 10px;
+            background-color: #FF6584;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .tracker-form button:hover {
+            background-color: #FF4B6E;
+        }
+
+        .tracker-log {
+            margin-top: 20px;
+            background-color: #FFD95A;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .chart-container {
+            margin-top: 20px;
+        }
+
+        .tips-container {
+            margin-top: 20px;
+            background-color: #FFD95A;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header class="activity-header">
+        <h1>Mental Health Tracker</h1>
+        <p>Keep track of your mood and stress levels to better understand your emotional well-being.</p>
+    </header>
+    
+    <main class="tracker-container">
+        <div class="tracker-header">
+            <h2>Daily Tracker</h2>
+        </div>
+        
+        <form id="tracker-form" class="tracker-form">
+            <label for="mood">How are you feeling today?</label>
+            <input type="text" id="mood" name="mood" placeholder="E.g., Happy, Sad, Anxious" required>
+            
+            <label for="stress-level">Rate your stress level (1-10):</label>
+            <input type="number" id="stress-level" name="stress-level" min="1" max="10" required>
+            
+            <label for="notes">Additional Notes:</label>
+            <textarea id="notes" name="notes" rows="4" placeholder="Share any thoughts or reflections"></textarea>
+            
+            <button type="submit">Submit</button>
+        </form>
+        
+        <div id="tracker-log" class="tracker-log">
+            
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="moodChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div id="tips-container" class="tips-container">
+            
+        </div>
+    </main>
+    
+    <footer>
+        <p><a href="features.html">Back to Features</a></p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEntries();
+            updateChart();
+        });
+
+        document.getElementById('tracker-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const mood = document.getElementById('mood').value;
+            const stressLevel = document.getElementById('stress-level').value;
+            const notes = document.getElementById('notes').value;
+            const date = new Date().toLocaleDateString();
+
+            const entry = {
+                mood,
+                stressLevel,
+                notes,
+                date
+            };
+
+            saveEntry(entry);
+            displayEntry(entry);
+            displayTip(stressLevel);
+            updateChart();
+            document.getElementById('tracker-form').reset();
+        });
+
+        function saveEntry(entry) {
+            let entries = JSON.parse(localStorage.getItem('entries')) || [];
+            entries.push(entry);
+            localStorage.setItem('entries', JSON.stringify(entries));
+        }
+
+        function loadEntries() {
+            const entries = JSON.parse(localStorage.getItem('entries')) || [];
+            entries.forEach(entry => displayEntry(entry));
+        }
+
+        function displayEntry(entry) {
+            const trackerLog = document.getElementById('tracker-log');
+            const newLogEntry = document.createElement('div');
+            newLogEntry.innerHTML = `
+                <h3>${entry.date}</h3>
+                <p><strong>Mood:</strong> ${entry.mood}</p>
+                <p><strong>Stress Level:</strong> ${entry.stressLevel}</p>
+                <p><strong>Notes:</strong> ${entry.notes}</p>
+                <hr>
+            `;
+            trackerLog.appendChild(newLogEntry);
+        }
+
+        const ctx = document.getElementById('moodChart').getContext('2d');
+        const moodChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [], 
+                datasets: [{
+                    label: 'Stress Level Over Time',
+                    data: [], 
+                    borderColor: '#4CAF50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                    fill: true,
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Stress Level'
+                        }
+                    }
+                }
+            }
+        });
+
+        function updateChart() {
+            const entries = JSON.parse(localStorage.getItem('entries')) || [];
+            const labels = entries.map(entry => entry.date);
+            const data = entries.map(entry => parseInt(entry.stressLevel)); 
+
+            moodChart.data.labels = labels;
+            moodChart.data.datasets[0].data = data;
+            moodChart.update();
+        }
+
+        function displayTip(stressLevel) {
+            const tipsContainer = document.getElementById('tips-container');
+            let tip;
+
+            if (stressLevel >= 7) {
+                tip = "Consider taking a short break or practicing relaxation techniques.";
+            } else if (stressLevel >= 4) {
+                tip = "It's important to take some time for self-care and relaxation.";
+            } else {
+                tip = "You're doing great! Keep up the positive habits.";
+            }
+
+            tipsContainer.innerHTML = `<p><strong>Tip:</strong> ${tip}</p>`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Learning Quiz Game</title>
+    <link rel="stylesheet" href="styles3.css">
+    <style>
+        body {
+            background-color: #F4F4F9;
+            font-family: Arial, sans-serif;
+            color: #333;
+            text-align: center;
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #6C63FF;
+        }
+
+        .quiz-options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            margin: 10px 0;
+        }
+
+        .quiz-options button {
+            padding: 10px 20px;
+            background-color: #FF6584;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .quiz-options button:hover {
+            background-color: #FF4B6E;
+        }
+
+        .quiz-result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <header class="activity-header">
+        <h1>Personalized Learning Quiz Game</h1>
+        <p>Test your knowledge and learn more with this fun quiz game.</p>
+    </header>
+    
+    <main class="quiz-container">
+        <div id="quiz">
+            <div class="quiz-question" id="question"></div>
+            <ul class="quiz-options">
+                <li><button id="option1" onclick="checkAnswer(0)">Option 1</button></li>
+                <li><button id="option2" onclick="checkAnswer(1)">Option 2</button></li>
+                <li><button id="option3" onclick="checkAnswer(2)">Option 3</button></li>
+                <li><button id="option4" onclick="checkAnswer(3)">Option 4</button></li>
+            </ul>
+            <div class="quiz-result" id="result"></div>
+        </div>
+    </main>
+    
+    <footer>
+        <p><a href="features.html">Back to Features</a></p>
+    </footer>
+    
+    <script>
+        const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["Berlin", "Madrid", "Paris", "Lisbon"],
+                correct: 2
+            },
+            {
+                question: "Who wrote 'To Kill a Mockingbird'?",
+                options: ["Harper Lee", "Mark Twain", "Ernest Hemingway", "F. Scott Fitzgerald"],
+                correct: 0
+            },
+            {
+                question: "What is the chemical symbol for water?",
+                options: ["O2", "H2O", "CO2", "NaCl"],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function loadQuiz() {
+            const questionEl = document.getElementById('question');
+            const option1 = document.getElementById('option1');
+            const option2 = document.getElementById('option2');
+            const option3 = document.getElementById('option3');
+            const option4 = document.getElementById('option4');
+
+            questionEl.innerText = quizData[currentQuestion].question;
+            option1.innerText = quizData[currentQuestion].options[0];
+            option2.innerText = quizData[currentQuestion].options[1];
+            option3.innerText = quizData[currentQuestion].options[2];
+            option4.innerText = quizData[currentQuestion].options[3];
+        }
+
+        function checkAnswer(selectedOption) {
+            const resultEl = document.getElementById('result');
+            if (selectedOption === quizData[currentQuestion].correct) {
+                resultEl.innerText = "Correct!";
+                resultEl.style.color = "#4CAF50";
+            } else {
+                resultEl.innerText = "Wrong. Try Again!";
+                resultEl.style.color = "#FF6584";
+            }
+
+            setTimeout(() => {
+                resultEl.innerText = "";
+                currentQuestion++;
+                if (currentQuestion < quizData.length) {
+                    loadQuiz();
+                } else {
+                    resultEl.innerText = "Quiz Completed!";
+                }
+            }, 2000);
+        }
+
+        window.onload = loadQuiz;
+    </script>
+</body>
+</html>

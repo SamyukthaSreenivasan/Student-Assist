@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Management Trivia</title>
+    <link rel="stylesheet" href="styles3.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fffde7;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .game-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .answers {
+            margin-bottom: 20px;
+        }
+        .answer {
+            background-color: #ffeb3b;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .answer:hover {
+            background-color: #fdd835;
+        }
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .score {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <main class="game-container">
+        <h1>Time Management Trivia</h1>
+        <div class="timer" id="timer">Time: 01:00</div>
+        <div class="score" id="score">Score: 0</div>
+        <div class="question" id="question">What is the Pomodoro Technique?</div>
+        <div class="answers">
+            <button class="answer" data-answer="A">A. A time management technique</button>
+            <button class="answer" data-answer="B">B. A cooking recipe</button>
+            <button class="answer" data-answer="C">C. A software tool</button>
+        </div>
+        <div id="message" class="message"></div>
+    </main>
+
+    <script>
+        let score = 0;
+        let timeLeft = 60;
+        let timer;
+
+        document.querySelectorAll('.answer').forEach(button => {
+            button.addEventListener('click', checkAnswer);
+        });
+
+        function startGame() {
+            score = 0;
+            timeLeft = 60;
+            document.getElementById('score').textContent = `Score: ${score}`;
+            document.getElementById('timer').textContent = `Time: 01:00`;
+            startTimer();
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `Time: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function checkAnswer(event) {
+            const answer = event.target.dataset.answer;
+            if (answer === 'A') {
+                score += 10;
+                document.getElementById('message').textContent = 'Correct!';
+            } else {
+                document.getElementById('message').textContent = 'Incorrect, try again!';
+            }
+            document.getElementById('score').textContent = `Score: ${score}`;
+            
+        }
+
+        function endGame() {
+            document.getElementById('message').textContent = `Game Over! Your final score is ${score}.`;
+        }
+
+        startGame();
+    </script>
+</body>
+</html>

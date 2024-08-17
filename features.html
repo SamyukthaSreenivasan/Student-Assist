@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - StudentAssist</title>
+    <link rel="stylesheet" href="styles3.css">
+    <style>
+        .feature-content {
+            display: none; }
+        .feature-content.active {
+            display: block; 
+        }
+        .feature {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="features-header" align="center">
+        <h1>Features of StudentAssist</h1>
+        <p>Explore the key features designed to support your academic and personal growth.</p>
+    </header>
+    
+    <section class="features-content" align="center">
+        <div class="feature" data-feature="feature1">
+            <img src="Img b.png" width="50%" alt="Personalized Learning" class="feature-image">
+            <div class="feature-content">
+                <div class="feature-icon">
+                    <i class="fas fa-user-graduate"></i> 
+                </div>
+                <h2>Personalized Learning</h2>
+                <p>Receive tailored learning pathways and resources based on your unique academic needs and goals.</p>
+                <a href="a1.html">Activities</a> |
+                <a href="g1.html">Games</a>
+            </div>
+        </div>
+        
+        <div class="feature" data-feature="feature2">
+            <img src="Img c.png" alt="Mental Health Support" class="feature-image">
+            <div class="feature-content">
+                <div class="feature-icon">
+                    <i class="fas fa-heart"></i> 
+                </div>
+                <h2>Mental Health Support</h2>
+                <p>Access mental health resources, counseling, and support to maintain your well-being throughout your studies.</p>
+                <a href="a2.html">Activities</a> |
+                <a href="g2.html">Games</a>
+            </div>
+        </div>
+        
+        <div class="feature" data-feature="feature3">
+            <img src="Img d.png" alt="Time Management Tools" class="feature-image">
+            <div class="feature-content">
+                <div class="feature-icon">
+                    <i class="fas fa-calendar-check"></i> 
+                </div>
+                <h2>Time Management Tools</h2>
+                <p>Utilize tools and strategies to effectively manage your time and stay organized with your academic and personal tasks.</p>
+                <a href="a3.html">Activities</a> |
+                <a href="g3.html">Games</a>
+            </div>
+        </div>
+        
+        <div class="feature" data-feature="feature4">
+            <img src="Img e.png" alt="Community Engagement" class="feature-image">
+            <div class="feature-content">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i> 
+                </div>
+                <h2>Community Engagement</h2>
+                <p>Engage with a supportive community of peers, mentors, and educators to enhance your learning experience.</p>
+                <a align="center" href="a4.html">Activities</a> 
+                
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <h2>Ready to Explore?</h2>
+        <p>Discover how StudentAssist can transform your academic journey. <a href="dashboard.html">Get Started</a></p>
+    </section>
+    
+    <footer>
+     >
+    </footer>
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const features = document.querySelectorAll('.feature');
+            
+            features.forEach(feature => {
+                feature.addEventListener('click', function() {
+                    const content = this.querySelector('.feature-content');
+                    content.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

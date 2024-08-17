@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Engagement - StudentAssist</title>
+    <link rel="stylesheet" href="styles3.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #1e88e5;
+        }
+        .forum, .events {
+            margin-bottom: 30px;
+        }
+        .forum h2, .events h2 {
+            color: #1e88e5;
+        }
+        .post, .event {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+        .post:hover, .event:hover {
+            background: #f1f8e9;
+        }
+        .post-title, .event-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .post-content, .event-details {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #1e88e5;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #1565c0;
+        }
+        .comment-section {
+            margin-top: 20px;
+        }
+        .comment {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            margin-top: 10px;
+            background: #f1f8e9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Community Engagement</h1>
+
+        
+        <div class="forum">
+            <h2>Community Forum</h2>
+            <div class="post">
+                <div class="post-title">Welcome to the Forum!</div>
+                <div class="post-content">Feel free to start discussions and ask questions.</div>
+                <div class="comment-section">
+                    <input type="text" placeholder="Add a comment..." id="comment-input">
+                    <button onclick="addComment()">Post Comment</button>
+                    <div id="comments"></div>
+                </div>
+            </div>
+           
+        </div>
+
+        
+        <div class="events">
+            <h2>Upcoming Events</h2>
+            <div class="event">
+                <div class="event-title">Study Group Meeting</div>
+                <div class="event-details">Join us for a study group meeting on Aug 25th, 3 PM at the library.</div>
+                <button onclick="rsvp()">RSVP</button>
+            </div>
+            <div class="event">
+                <div class="event-title">Mental Health Workshop</div>
+                <div class="event-details">Participate in a mental health workshop on Aug 30th, 10 AM online.</div>
+                <button onclick="rsvp()">RSVP</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        function addComment() {
+            const commentInput = document.getElementById('comment-input');
+            const commentsDiv = document.getElementById('comments');
+
+            if (commentInput.value.trim() !== '') {
+                const newComment = document.createElement('div');
+                newComment.classList.add('comment');
+                newComment.textContent = commentInput.value;
+                commentsDiv.appendChild(newComment);
+                commentInput.value = ''; 
+            }
+        }
+
+        function rsvp() {
+            alert('RSVP feature is under construction!');
+        }
+    </script>
+</body>
+</html>
